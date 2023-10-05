@@ -14,7 +14,6 @@
     <h1>BIENVENUE !</h1>
     <h2>Connectez vous à votre compte <span class="hint">Ma fée</span>, et venez passer votre commande</h2>
 
-
     <form action="" method="post">
         <p>Adresse email <br><input id="email" name="email" type="text"></p>
         <p>Mot de passe <br><input id="mdp" name="mdp" type="password"></p>

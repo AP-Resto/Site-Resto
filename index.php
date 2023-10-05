@@ -24,12 +24,77 @@
                 <i class="fa-solid fa-chevron-left"></i>
             </div>
         </div>
+
+        <div class="controls">
+            <a href="deconnexion.php" class="logout">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                Déconnexion
+            </a>
+
+        </div>
     </aside>
     <aside id="cart">
         <div class="head">
             <p class="title">Panier</p>
         </div>
-        <div class="content"></div>
+        <div class="content">
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+            <div class="item">
+                <input type="number" value="1">
+                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
+                <p class="price">0.00€</p>
+            </div>
+
+        </div>
         <div class="bottom">
             <button>Payer !</button>
         </div>
@@ -38,10 +103,21 @@
 
     <div class="container">
         <?php
+        
         for ($i = 1; $i < 19; $i++) {
             echo "
                 <div class=\"item\">
                     <img src=\"https://generatorfun.com/code/uploads/Random-Food-image-$i.jpg\" class=\"preview\">
+                    <div class=\"content\">
+                        <p class=\"name\">Nom du plat $i</p>
+                        <p class=\"description\">Description du plat $i</p>
+
+                        <p class=\"bottom\">
+                            <button class=\"ajoutPanier\">
+                                Ajout au panier " . number_format($i, 2) . "€ 
+                            </button>
+                        </p>
+                    </div>
                 </div>
                 ";
         }
