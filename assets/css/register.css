@@ -101,3 +101,7 @@ input[type=checkbox] {
     margin-top: 5px;
     text-align: right;
 }
+
+p.erreur {
+    color: red;
+}

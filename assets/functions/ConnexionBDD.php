@@ -2,10 +2,10 @@
 
 class ConnexionBDD
 {
-    private $host = 'localhost';
-    private $dbname = 'restaurant';
-    private $root = 'root';
-    private $password = '';
+    private $host;
+    private $dbname;
+    private $root;
+    private $password;
     private $dbh;
 
     public function __construct()

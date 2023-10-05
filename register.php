@@ -1,20 +1,24 @@
 <?php
+include "assets/functions/ConnexionBDD.php";
+$connexion = new ConnexionBDD();
+$messageErreur = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer les données soumises par le formulaire
+if (isset($_POST["submit"])) {
     $email = $_POST["email"];
+    $email_confirmation = $_POST["email-confirmation"];
     $password = $_POST["password"];
+    $password_confirmation = $_POST["password-confirmation"];
+    $accept_conditions = $_POST["accept_conditions"];
 
-    // Vérifier si l'adresse e-mail et le mot de passe sont valides
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) >= 6) {
-        // Les données sont valides, vous pouvez les stocker dans une base de données ou effectuer d'autres actions nécessaires.
-
-        // Rediriger l'utilisateur vers une page de confirmation ou de connexion
-        header("Location: login.php");
-        exit();
+    if ($email == $email_confirmation && $password == $password_confirmation && $accept_conditions == "on") {
+        $resultat = $connexion->register($email, $password);
+        if ($resultat == TRUE) {
+            header("Location: login.php");
+        } else {
+            $messageErreur = "Erreur lors de l'inscription";
+        }
     } else {
-        // Les données ne sont pas valides, afficher un message d'erreur
-        $error_message = "Veuillez saisir une adresse e-mail valide et un mot de passe d'au moins 6 caractères.";
+        $messageErreur = "Les mots de passe ou les emails ne correspondent pas";
     }
 }
 ?>
@@ -31,28 +35,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <img src="assets/images/log.png" alt="">
-    <form action="" class="form_connexion_inscription">
+    <form action="" method="POST" class="form_connexion_inscription">
         <h2>Enregistrement</h2>
         <p class="welcome">
             Remplissez les champs ci-dessous pour créer votre compte <span style="color: #00A45B;">Ma Fée </span> !
+        </p>
+        <p>
+            <?php
+            if ($messageErreur != "") {
+                echo "<p class=\"erreur\">$messageErreur</p>";
+            }
+            ?>
         </p>
         <p class="separator"></p>
         <label> Adresse e-mail </label>
         <input type="email" name="email">
         <label> Confirmation de l'adresse email</label>
-        <input type="email" name="email">
+        <input type="email" name="email-confirmation">
         <p class="separator"></p>
         <label> Mot de passe</label>
         <input type="password" name="password">
         <label> Confirmation du mot de passe</label>
-        <input type="password" name="password">
+        <input type="password" name="password-confirmation">
         <a href="login.php" class="sublink">Vous avez déjà un compte ?</a>
         <p class="separator"></p>
 
         <label>
             <input type="checkbox" name="accept_conditions"> J'accepte les conditions d'utilisation
         </label>
-        <input type="submit" value="Inscription">
+        <input type="submit" name="submit" value="Inscription">
     </form>
 
 </body>
