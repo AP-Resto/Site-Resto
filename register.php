@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <img src="img/Logo_resto.png" alt="">
+    <img src="assets/images/log.png" alt="">
     <form action="" class="form_connexion_inscription">
         <h2>Enregistrement</h2>
         <p class="welcome">
