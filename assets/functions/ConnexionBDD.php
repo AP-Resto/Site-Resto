@@ -18,8 +18,8 @@ class ConnexionBDD
     }
 
     /*
-    * Méthode qui permet de préparer et d'éxcuter une requête
-    */
+     * Méthode qui permet de préparer et d'éxcuter une requête
+     */
     function prepareAndFetchAll($sql, $params = [])
     {
         try {
@@ -30,6 +30,25 @@ class ConnexionBDD
                 return [];
             else
                 return $stmt->fetchAll();
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
+    }
+
+
+    /*
+     * Méthode qui permet de préparer et d'éxcuter une requête
+     */
+    function prepareAndFetchOne($sql, $params = [])
+    {
+        try {
+            $stmt = $this->dbh->prepare($sql);
+            $stmt->execute($params);
+
+            if ($stmt->rowCount() == 0)
+                return [];
+            else
+                return $stmt->fetch();
         } catch (PDOException $ex) {
             throw $ex;
         }
@@ -47,10 +66,10 @@ class ConnexionBDD
     }
 
     /*
-    *   Méthode pour récuperer l'utilisateur depuis la session
-    *   si la méthode retourne NULL c'est que l'utilisateur
-    *               n'est pas connecté.
-    */
+     *   Méthode pour récuperer l'utilisateur depuis la session
+     *   si la méthode retourne NULL c'est que l'utilisateur
+     *               n'est pas connecté.
+     */
     function getUserFromSession()
     {
         if (!isset($_SESSION["user"])) {
@@ -82,17 +101,15 @@ class ConnexionBDD
 
     public function login($email, $mdp)
     {
-        if (isset($_POST['Email']) && isset($_POST['Mot_de_passe'])) {
-            $query = $this->dbh->prepare("SELECT * FROM utilisateur WHERE Email = :email AND Mot_de_passe = :mdp");
-            $query->execute(['email' => $email, 'mdp' => $mdp]);
-            $user = $query->fetch();
-            if ($user) {
-                $_SESSION['utilisateur'] = $user;
-                return TRUE;
-            } else {
-                return FALSE;
-            }
+        $user = $this->prepareAndFetchOne("SELECT * FROM utilisateur WHERE Email = :email AND Mot_de_passe = :mdp", ['email' => $email, 'mdp' => $mdp]);
+
+        if ($user !== []) {
+            $_SESSION['utilisateur'] = $user;
+            return TRUE;
+        } else {
+            return FALSE;
         }
+
     }
 
     public function register($email, $mdp)
