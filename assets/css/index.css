@@ -241,4 +241,47 @@ aside#cart .item p.price {
 .container .item .content {
     height: 50%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.container .item p.name {
+    font-weight: bold;
+}
+.container .item p {
+    flex: 0.33;
+}
+
+.container .item p.bottom {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center;
+    box-sizing: border-box;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
+.container .item p.bottom button {
+    height: 30px;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5rem;
+    border: none;
+    background: #00C56D;
+    color: white;
+    font-weight: 700;
+}
+
+.container .item .price{
+    color: black;
+}
+
+.container .item .price::before{
+    content: "(";
+}
+.container .item .price::after{
+    content: "€)";
 }

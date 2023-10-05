@@ -1,3 +1,5 @@
+<?php 
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -30,7 +32,6 @@
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                 Déconnexion
             </a>
-
         </div>
     </aside>
     <aside id="cart">
@@ -114,7 +115,10 @@
 
                         <p class=\"bottom\">
                             <button class=\"ajoutPanier\">
-                                Ajout au panier " . number_format($i, 2) . "€ 
+                            <i class=\"fa-solid fa-cart-shopping\"></i>
+                            <span>
+                                Ajout au panier <span class=\"price\">" . number_format($i, 2) . "</span> 
+                            </span>                        
                             </button>
                         </p>
                     </div>
