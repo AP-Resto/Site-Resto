@@ -101,7 +101,13 @@ class ConnexionBDD
 
     public function login($email, $mdp)
     {
-        $user = $this->prepareAndFetchOne("SELECT * FROM utilisateur WHERE Email = :email AND Mot_de_passe = :mdp", ['email' => $email, 'mdp' => $mdp]);
+        $user = $this->prepareAndFetchOne(
+            "SELECT * FROM utilisateur WHERE Email = :email AND Mot_de_passe = :mdp",
+            [
+                'email' => $email,
+                'mdp' => password_hash($mdp, PASSWORD_BCRYPT)
+            ]
+        );
 
         if ($user !== []) {
             $_SESSION['utilisateur'] = $user;
@@ -109,20 +115,17 @@ class ConnexionBDD
         } else {
             return FALSE;
         }
-
     }
 
     public function register($email, $mdp)
     {
-        if (isset($_POST['Email']) && isset($_POST['Mot_de_passe'])) {
-            $query = $this->dbh->prepare("INSERT INTO utilisateur (Login, Email, Mot_de_passe) VALUES ('', :email, :mdp)");
-            $query->execute(['email' => $email, 'mdp' => $mdp]);
-            $inscriptionValidee = $query->execute();
-            if ($inscriptionValidee) {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
+        $query = $this->dbh->prepare("INSERT INTO utilisateur (Login, Email, Mot_de_passe) VALUES ('', :email, :mdp)");
+        $query->execute(['email' => $email, 'mdp' => $mdp]);
+        $inscriptionValidee = $query->execute();
+        if ($inscriptionValidee) {
+            return TRUE;
+        } else {
+            return FALSE;
         }
     }
 }
