@@ -1,0 +1,47 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: "Roboto";
+    margin: 0;
+    background-image: url("https://marcwiner.com/wp-content/uploads/2022/09/Nourriture-americaine-scaled.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(7px) brightness(.6);
+}
+h1{
+    text-align: center;
+    color: RGB(30,175,111);
+    letter-spacing: 10px;
+    font-size: 25px;
+    margin: auto;
+}
+img {
+    width: 100px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+    position: absolute;
+    top: 0;
+}
+
+button{
+    width: 200px;
+    margin: 1rem;
+    height: 40px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: RGB(30,175,111);
+    color: white;
+}
+
+.buttons {
+    align-self: end;
+}
+
+.imagesfond{
+
+
+}
