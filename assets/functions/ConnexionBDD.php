@@ -119,8 +119,8 @@ class ConnexionBDD
 
     public function register($email, $mdp)
     {
-        $query = $this->dbh->prepare("INSERT INTO utilisateur (Login, Email, Mot_de_passe) VALUES ('', :email, :mdp)");
-        $query->execute(['email' => $email, 'mdp' => $mdp]);
+        $query = $this->dbh->prepare("INSERT INTO utilisateur (Login, Email, Mot_de_passe) VALUES (:login, :email, :mdp)");
+        $query->execute([':login' => '', ':email' => $email, ':mdp' => $mdp]);
         $inscriptionValidee = $query->execute();
         if ($inscriptionValidee) {
             return TRUE;
