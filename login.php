@@ -1,29 +1,26 @@
 <?php
-session_start();
-include "assets/functions/db_functions.php";
+if(session_status() !== PHP_SESSION_ACTIVE){
+    session_start();
+}
+$messageerreur = "";
+function my_autoloader($ConnexionBDD) {
+    include 'assets/functions/'.$ConnexionBDD.'.php';
+}
+spl_autoload_register('my_autoloader');
 
-$identifiantsInvalides = FALSE;
+$user = FALSE;
 
-$db = new DatabaseUtils();
-if (!empty($_POST["login"]) && !empty($_POST["mot_de_passe"])) {
-    $pseudo = $_POST["login"];
-    $mdp = $_POST["mot_de_passe"];
+$db = new ConnexionBDD();
 
-    $sql = "SELECT * FROM utilisateur WHERE login = :login AND mot_de_passe = :mot_de_passe";
+if (!empty($_POST["email"]) && !empty($_POST["mdp"])) {
+    $email = $_POST["email"];
+    $mdp = $_POST["mdp"];
 
-    $rows = $db->prepareAndFetchAll(
-        $sql,
-        [
-            ":login" => $login,
-            ":mdp" => $mdp
-        ]
-    );
-
-    if (count($rows) == 0) {
-        $identifiantsInvalides = TRUE;
-    } else {
-        $_SESSION["user"] = $rows[0];
-        header("Location: index.php");
+    $estConnecte = $db->login($email,$mdp);
+    if($estConnecte){
+    header("location : menus.php");
+    }else{
+        $messageerreur = "Email ou mot de passe incorrect";
     }
 }
 ?>
@@ -42,6 +39,11 @@ if (!empty($_POST["login"]) && !empty($_POST["mot_de_passe"])) {
     <div class="conteneur">
         <h1>BIENVENUE !</h1>
         <h2>Connectez vous à votre compte <span class="hint">Ma fée</span>, et venez passer votre commande</h2>
+        <?php
+        if ($messageerreur != ""){
+            echo "<h3 style='color: red; text-align: center'> ".$messageerreur. "</h3>";
+        }
+        ?>
 
     <form action="" method="post">
         <p>Adresse email <br><input id="email" name="email" type="text"></p>
