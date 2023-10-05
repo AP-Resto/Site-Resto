@@ -1,6 +1,34 @@
+<?php
+session_start();
+include "assets/functions/db_functions.php";
+
+$identifiantsInvalides = FALSE;
+
+$db = new DatabaseUtils();
+if (!empty($_POST["login"]) && !empty($_POST["mot_de_passe"])) {
+    $pseudo = $_POST["login"];
+    $mdp = $_POST["mot_de_passe"];
+
+    $sql = "SELECT * FROM utilisateur WHERE login = :login AND mot_de_passe = :mot_de_passe";
+
+    $rows = $db->prepareAndFetchAll(
+        $sql,
+        [
+            ":login" => $login,
+            ":mdp" => $mdp
+        ]
+    );
+
+    if (count($rows) == 0) {
+        $identifiantsInvalides = TRUE;
+    } else {
+        $_SESSION["user"] = $rows[0];
+        header("Location: index.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +37,6 @@
     <title>Ma Fée - Connexion à votre compte</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <img src="assets/images/log.png">
     <div class="conteneur">
@@ -25,5 +52,4 @@
         </form>
     </div>
 </body>
-
 </html>
