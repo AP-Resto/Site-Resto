@@ -132,11 +132,50 @@ class ConnexionBDD
         }
     }
 
-    public function verification($email){
-        if($this->prepareAndFetchOne("SELECT email FROM user WHERE email = :email;", [":email" => $email])){
+    public function verification($email)
+    {
+        if ($this->prepareAndFetchOne("SELECT email FROM user WHERE email = :email;", [":email" => $email])) {
             return TRUE;
-        } else{
+        } else {
             return FALSE;
         }
+    }
+
+    public function calculerTotalPanier($panier)
+    {
+        $total = 0;
+
+        $ids = [];
+        foreach ($panier as $p) {
+            $ids[] = $p["id_produit"];
+        }
+
+        $imploded = implode(",", $ids);
+
+        $produits = $this->prepareAndFetchAll("SELECT produit.prix_ht, produit.id_produit FROM produit WHERE produit.id_produit IN ($imploded);");
+
+
+        foreach ($produits as $prod) {
+            $prix = $prod["prix_ht"];
+            $id = $prod["id_produit"];
+            $qty = $this->rechercheQuantiteDansPanier($panier, $id);
+
+            if ($qty != -1) {
+                $prix = $qty * $prix;
+                $total += $prix;
+            }
+
+        }
+        return $total;
+    }
+
+    private function rechercheQuantiteDansPanier($panier, $idProduit)
+    {
+        foreach ($panier as $p) {
+            if ($p["id_produit"] == $idProduit)
+                return $p["qty"];
+        }
+
+        return -1;
     }
 }

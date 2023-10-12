@@ -1,3 +1,19 @@
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+function autoloader($className)
+{
+    include "assets/functions/$className.php";
+}
+spl_autoload_register("autoloader");
+
+$connexionBDD = new ConnexionBDD();
+$panier = json_decode($_COOKIE["panier"] ?? "[]", true);
+$totalCommande = $connexionBDD->calculerTotalPanier($panier);
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,9 +25,11 @@
 </head>
 
 <body>
-
     <h1>Payer</h1><br>
-    <p>Commande n°XXXX pour un montant de XX,XX €</p>
+    <p>Commande d'un montant de <b>
+            <?= number_format($totalCommande, 2) . "€" ?>
+        </b>
+    </p>
     <p class="separator"></p>
     <form action="">
         <label> N° Carte </label>
