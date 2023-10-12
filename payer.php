@@ -38,7 +38,7 @@ $totalCommande = $connexionBDD->calculerTotalPanier($panier);
         <input type="date" name="email-confirmation"> <br>
         <label> Cryptogramme (CVC)</label>
         <input type="Cryptogramme" name="Cryptogramme"> <br>
-        <button class="favorite styled" type="button">Payer</button>
+        <input type="submit" value="Payer !">
     </form>
 
     <p class="separator"></p>

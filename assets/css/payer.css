@@ -109,3 +109,7 @@ p.erreur {
 input {
     display: block;
 }
+
+form input[type=submit] {
+    width: 100%;
+}
