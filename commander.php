@@ -54,6 +54,7 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
         <div class="content">
 
             <?php
+            $montantTotalPanier = 0;
 
             $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 
@@ -65,13 +66,17 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
                 if ($produit) {
                     $libelle = $produit["libelle"];
                     $prix = number_format($produit["prix_ht"] * $quantity, 2);
+                    $montantTotalPanier += $produit["prix_ht"] * $quantity;
+
                     echo "
                         <div class=\"item\">
                         <input type=\"text\" value=\"$quantity x\" disabled>
                         <p class=\"name\">$libelle</p>
                         <p class=\"price\">{$prix}€</p>
 
-                        <a class=\"delete\" data-item-id=\"$idProduit\" onclick=\"supprimerDuPanier(this)\" href=\"javascript:void(0);\">X</a>
+                        <a class=\"delete\" data-item-id=\"$idProduit\" onclick=\"supprimerDuPanier(this)\" href=\"javascript:void(0);\">
+                            <i style=\"text-align: center;\" class=\"fa-solid fa-x\"></i>
+                        </a>
                     </div>
                         ";
                 }
@@ -91,7 +96,11 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 
         </div>
         <div class="bottom">
-            <button>Payer !</button>
+            <button>Payer !
+                <span class="price">
+                    <?= "(" . number_format($montantTotalPanier, 2) . "€)" ?>
+                </span>
+            </button>
         </div>
     </aside>
 
@@ -101,8 +110,8 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
         $i = 0;
 
         foreach ($plats as $plat) {
-            $i++; // C'est juste le compteur pour avoir une image pour les plats depuis un autre site.
-        
+            $i++;
+
             $id = $plat["id_produit"];
             $libelle = $plat["libelle"];
             $prix = $plat["prix_ht"];
@@ -115,10 +124,10 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 
                         <p class=\"bottom\">
                             <button class=\"ajoutPanier\" data-item-id=\"$id\" onclick=\"ajouterAuPanier(this)\">
-                            <i class=\"fa-solid fa-cart-shopping\"></i>
-                            <span>
-                                Ajout au panier <span class=\"price\">" . number_format($prix, 2) . "</span> 
-                            </span>                        
+                                <i class=\"fa-solid fa-cart-shopping\"></i>
+                                <span>
+                                    Ajout au panier <span class=\"price\">" . number_format($prix, 2) . "</span> 
+                                </span>                        
                             </button>
                         </p>
                     </div>
@@ -127,7 +136,6 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
         }
         ?>
     </div>
-
 
     <script src="assets/js/profileModule.js"></script>
     <script src="assets/js/panier.js"></script>
