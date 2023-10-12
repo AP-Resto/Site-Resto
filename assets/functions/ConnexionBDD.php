@@ -104,8 +104,8 @@ class ConnexionBDD
         $user = $this->prepareAndFetchOne(
             "SELECT * FROM utilisateur WHERE Email = :email AND Mot_de_passe = :mdp",
             [
-                'email' => $email,
-                'mdp' => password_hash($mdp, PASSWORD_BCRYPT)
+                ':email' => $email,
+                ':mdp' => password_hash($mdp, PASSWORD_BCRYPT)
             ]
         );
 
