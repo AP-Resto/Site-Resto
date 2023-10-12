@@ -1,16 +1,19 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
 function autoloader($className)
 {
     include "assets/functions/$className.php";
 }
+
 spl_autoload_register("autoloader");
 
 $connexionBDD = new ConnexionBDD();
 $plats = $connexionBDD->prepareAndFetchAll(
     "SELECT * FROM produit"
 );
-
-
 $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 ?>
 <!DOCTYPE html>
