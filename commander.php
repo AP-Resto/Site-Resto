@@ -96,7 +96,7 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 
         </div>
         <div class="bottom">
-            <button>Payer !
+            <button onclick="window.location.href = 'payer.php';">Payer !
                 <span class="price">
                     <?= "(" . number_format($montantTotalPanier, 2) . "€)" ?>
                 </span>
