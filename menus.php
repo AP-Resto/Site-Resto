@@ -1,4 +1,16 @@
 <?php 
+function autoloader($className){
+    include "assets/functions/$className.php";
+}
+spl_autoload_register("autoloader");
+
+$connexionBDD = new ConnexionBDD();
+$plats = $connexionBDD->prepareAndFetchAll(
+    "SELECT * FROM produit"
+);
+
+
+$panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -104,26 +116,32 @@
 
     <div class="container">
         <?php
-        
-        for ($i = 1; $i < 19; $i++) {
+        $i = 0;
+
+        foreach($plats as $plat){
+            $i++; // C'est juste le compteur pour avoir une image pour les plats depuis un autre site.
+
+            $id = $plat["id_produit"];
+            $libelle = $plat["libelle"];
+            $prix = $plat["prix_ht"];
             echo "
-                <div class=\"item\">
-                    <img src=\"https://generatorfun.com/code/uploads/Random-Food-image-$i.jpg\" class=\"preview\">
-                    <div class=\"content\">
-                        <p class=\"name\">Nom du plat $i</p>
-                        <p class=\"description\">Description du plat $i</p>
+                <div class=\"item\" data-item-id=\"$id\">
+                <img src=\"https://generatorfun.com/code/uploads/Random-Food-image-$i.jpg\" class=\"preview\">
+                <div class=\"content\">
+                        <p class=\"name\">$libelle</p>
+                        <p class=\"description\"></p>
 
                         <p class=\"bottom\">
                             <button class=\"ajoutPanier\">
                             <i class=\"fa-solid fa-cart-shopping\"></i>
                             <span>
-                                Ajout au panier <span class=\"price\">" . number_format($i, 2) . "</span> 
+                                Ajout au panier <span class=\"price\">" . number_format($prix, 2) . "</span> 
                             </span>                        
                             </button>
                         </p>
                     </div>
                 </div>
-                ";
+            ";
         }
         ?>
     </div>

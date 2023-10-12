@@ -3,7 +3,7 @@
 class ConnexionBDD
 {
     private $host = 'localhost';
-    private $dbname = 'restaurant';
+    private $dbname = 'db_restoweb';
     private $root = 'root';
     private $password = '';
     private $dbh;
@@ -11,7 +11,7 @@ class ConnexionBDD
     public function __construct()
     {
         $this->host = "localhost";
-        $this->dbname = "restaurant";
+        $this->dbname = "db_restoweb";
         $this->root = "root";
         $this->password = "";
         $this->dbh = $this->connect();
