@@ -67,7 +67,7 @@ if (isset($_POST["submit"])) {
         <label>
             <input type="checkbox" name="accept_conditions"> J'accepte les conditions d'utilisation
         </label>
-        <input type="submit" name="submit" value="Inscription">
+        <input type="submit" name="submit" value="Inscription"> 
     </form>
 
 </body>
