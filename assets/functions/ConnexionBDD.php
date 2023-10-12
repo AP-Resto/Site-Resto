@@ -131,4 +131,12 @@ class ConnexionBDD
             return FALSE;
         }
     }
+
+    public function verification($email){
+        if($this->prepareAndFetchOne("SELECT email FROM user WHERE email = :email;", [":email" => $email])){
+            return TRUE;
+        } else{
+            return FALSE;
+        }
+    }
 }
