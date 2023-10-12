@@ -1,5 +1,6 @@
-<?php 
-function autoloader($className){
+<?php
+function autoloader($className)
+{
     include "assets/functions/$className.php";
 }
 spl_autoload_register("autoloader");
@@ -118,7 +119,7 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
         <?php
         $i = 0;
 
-        foreach($plats as $plat){
+        foreach ($plats as $plat) {
             $i++; // C'est juste le compteur pour avoir une image pour les plats depuis un autre site.
 
             $id = $plat["id_produit"];
