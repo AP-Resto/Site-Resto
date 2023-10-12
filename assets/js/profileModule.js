@@ -5,3 +5,4 @@ profileHead.addEventListener("click", () => {
     profile.classList.toggle("expand");
 
 });
+

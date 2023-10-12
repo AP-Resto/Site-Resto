@@ -31,7 +31,7 @@ header {
 
 aside#cart {
     /* Taile du panier = 200px */
-    width: 270px;
+    width: 310px;
 
     /* Hauteur = 100% de l'écran */
     height: 100vh;
@@ -197,7 +197,7 @@ aside#cart .item input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-aside#cart .item input[type=number] {
+aside#cart .item input[type=text] {
     -moz-appearance: textfield;
     width: 32px;
     height: 32px;
@@ -284,4 +284,33 @@ aside#cart .item p.price {
 }
 .container .item .price::after{
     content: "€)";
+}
+
+aside#cart .item .delete{
+    flex: 0.5;
+    color: red;
+    border: 1px solid red;
+    text-decoration: none;
+    padding: .2rem .5rem;
+    background: rgba(255, 0, 0, .1);
+    border-radius: 10px;
+
+    transition: .2s color, .2s background;
+}
+
+aside#cart .item .delete:hover {
+    color: white;
+    background: rgba(255, 0, 0, .4);
+
+}
+
+
+.ajoutPanier {
+    transition: .2s transform, .2s filter;
+    cursor: pointer;
+}
+
+.ajoutPanier:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
 }

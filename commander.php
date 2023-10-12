@@ -1,5 +1,6 @@
-<?php 
-function autoloader($className){
+<?php
+function autoloader($className)
+{
     include "assets/functions/$className.php";
 }
 spl_autoload_register("autoloader");
@@ -51,61 +52,42 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
             <p class="title">Panier</p>
         </div>
         <div class="content">
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
-            <div class="item">
-                <input type="number" value="1">
-                <p class="name">Cheeseburger sur son lit de mayonnaise</p>
-                <p class="price">0.00€</p>
-            </div>
+
+            <?php
+
+            $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
+
+            foreach ($panier as $item) {
+                $idProduit = $item["id_produit"];
+                $quantity = $item["qty"];
+
+                $produit = recupererInfosProduit($idProduit, $plats);
+                if ($produit) {
+                    $libelle = $produit["libelle"];
+                    $prix = number_format($produit["prix_ht"] * $quantity, 2);
+                    echo "
+                        <div class=\"item\">
+                        <input type=\"text\" value=\"$quantity x\" disabled>
+                        <p class=\"name\">$libelle</p>
+                        <p class=\"price\">{$prix}€</p>
+
+                        <a class=\"delete\" data-item-id=\"$idProduit\" onclick=\"supprimerDuPanier(this)\" href=\"javascript:void(0);\">X</a>
+                    </div>
+                        ";
+                }
+            }
+
+            function recupererInfosProduit(int $idProduit, array $produits): array
+            {
+
+                foreach ($produits as $produit) {
+                    if ($produit["id_produit"] == $idProduit)
+                        return $produit;
+                }
+
+                return [];
+            }
+            ?>
 
         </div>
         <div class="bottom">
@@ -118,9 +100,9 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
         <?php
         $i = 0;
 
-        foreach($plats as $plat){
+        foreach ($plats as $plat) {
             $i++; // C'est juste le compteur pour avoir une image pour les plats depuis un autre site.
-
+        
             $id = $plat["id_produit"];
             $libelle = $plat["libelle"];
             $prix = $plat["prix_ht"];
@@ -132,7 +114,7 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
                         <p class=\"description\"></p>
 
                         <p class=\"bottom\">
-                            <button class=\"ajoutPanier\">
+                            <button class=\"ajoutPanier\" data-item-id=\"$id\" onclick=\"ajouterAuPanier(this)\">
                             <i class=\"fa-solid fa-cart-shopping\"></i>
                             <span>
                                 Ajout au panier <span class=\"price\">" . number_format($prix, 2) . "</span> 
@@ -146,7 +128,9 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
         ?>
     </div>
 
+
     <script src="assets/js/profileModule.js"></script>
+    <script src="assets/js/panier.js"></script>
 </body>
 
 </html>
