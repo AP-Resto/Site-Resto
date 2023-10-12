@@ -79,10 +79,10 @@ class ConnexionBDD
         $user = $_SESSION["user"];
 
         $res = $this->prepareAndFetchAll(
-            "SELECT * FROM utilisateur WHERE pseudo = :pseudo AND mot_de_passe = :pass",
+            "SELECT * FROM user WHERE email = :email AND password = :password",
             [
-                ":pseudo" => $user["pseudo"],
-                ":pass" => $user["mot_de_passe"]
+                ":email" => $user["email"],
+                ":password" => $user["password"]
             ]
         );
 
@@ -102,7 +102,7 @@ class ConnexionBDD
     public function login($email, $password)
     {
         $user = $this->prepareAndFetchOne(
-            "SELECT * FROM utilisateur WHERE Email = :email AND Mot_de_passe = :mdp",
+            "SELECT * FROM user WHERE email = :email AND password = :mdp",
             [
                 ':email' => $email,
                 ':mdp' => password_hash($password, PASSWORD_BCRYPT)
@@ -110,7 +110,7 @@ class ConnexionBDD
         );
 
         if ($user !== []) {
-            $_SESSION['utilisateur'] = $user;
+            $_SESSION['user'] = $user;
             return TRUE;
         } else {
             return FALSE;
@@ -119,7 +119,7 @@ class ConnexionBDD
 
     public function register($email, $password)
     {
-        $query = $this->dbh->prepare("INSERT INTO utilisateur (email,password) VALUES (:email, :password)");
+        $query = $this->dbh->prepare("INSERT INTO user (email,password) VALUES (:email, :password)");
         $query->execute([
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT)
