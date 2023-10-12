@@ -2,16 +2,16 @@
 
 class ConnexionBDD
 {
-    private $host;
-    private $dbname;
-    private $root;
-    private $password;
+    private $host = 'localhost';
+    private $dbname = 'db_restoweb';
+    private $root = 'root';
+    private $password = '';
     private $dbh;
 
     public function __construct()
     {
         $this->host = "localhost";
-        $this->dbname = "restaurant";
+        $this->dbname = "db_restoweb";
         $this->root = "root";
         $this->password = "";
         $this->dbh = $this->connect();
@@ -99,13 +99,13 @@ class ConnexionBDD
     }
 
 
-    public function login($email, $mdp)
+    public function login($email, $password)
     {
         $user = $this->prepareAndFetchOne(
             "SELECT * FROM utilisateur WHERE Email = :email AND Mot_de_passe = :mdp",
             [
                 ':email' => $email,
-                ':mdp' => password_hash($mdp, PASSWORD_BCRYPT)
+                ':mdp' => password_hash($password, PASSWORD_BCRYPT)
             ]
         );
 
@@ -117,10 +117,13 @@ class ConnexionBDD
         }
     }
 
-    public function register($email, $mdp)
+    public function register($email, $password)
     {
-        $query = $this->dbh->prepare("INSERT INTO utilisateur (Login, Email, Mot_de_passe) VALUES ('', :email, :mdp)");
-        $query->execute(['email' => $email, 'mdp' => $mdp]);
+        $query = $this->dbh->prepare("INSERT INTO utilisateur (email,password) VALUES (:email, :password)");
+        $query->execute([
+            'email' => $email,
+            'password' => password_hash($password, PASSWORD_BCRYPT)
+        ]);
         $inscriptionValidee = $query->execute();
         if ($inscriptionValidee) {
             return TRUE;

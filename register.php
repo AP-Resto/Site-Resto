@@ -10,8 +10,12 @@ if (isset($_POST["submit"])) {
     $password_confirmation = $_POST["password-confirmation"];
     $accept_conditions = $_POST["accept_conditions"];
 
+    if ($password <= 8) {
+        $messageErreur = "Le mot de passe doit contenir au moins 8 caractères";
+    }
+
     if ($email == $email_confirmation && $password == $password_confirmation && $accept_conditions == "on") {
-        $resultat = $connexion->register($email, $password);
+        $resultat = $connexion->register($email, $password,);
         if ($resultat == TRUE) {
             header("Location: login.php");
         } else {
