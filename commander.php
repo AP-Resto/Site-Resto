@@ -36,7 +36,7 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
     <aside id="profile">
         <div class="head">
             <div class="left">
-                Mon profil
+                Barre d'outils
             </div>
             <div class="right">
                 <i class="fa-solid fa-chevron-left"></i>
