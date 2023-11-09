@@ -99,22 +99,26 @@ class ConnexionBDD
     }
 
 
-    public function login($email, $password)
+    public function login($email, $password): bool
     {
+    
         $user = $this->prepareAndFetchOne(
-            "SELECT * FROM user WHERE email = :email AND password = :mdp",
+            "SELECT * FROM user WHERE email = :email",
             [
-                ':email' => $email,
-                ':mdp' => password_hash($password, PASSWORD_BCRYPT)
-            ]
+                ':email' => $email            ]
         );
 
-        if ($user !== []) {
-            $_SESSION['user'] = $user;
-            return TRUE;
-        } else {
+        if($user === false || $user === []){
             return FALSE;
         }
+        
+        $passwordHash = $user["password"];
+        if($password == NULL || $passwordHash == NULL){
+            die("One of the passwords is null");
+        }
+        $verification = password_verify($password, $passwordHash);
+        
+        return $verification ;
     }
 
     public function register($email, $password)

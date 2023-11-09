@@ -3,9 +3,9 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 $messageerreur = "";
-function my_autoloader($ConnexionBDD)
+function my_autoloader($c)
 {
-    include 'assets/functions/' . $ConnexionBDD . '.php';
+    include "assets/functions/$c.php";
 }
 spl_autoload_register('my_autoloader');
 
@@ -19,7 +19,7 @@ if (!empty($_POST["email"]) && !empty($_POST["mdp"])) {
 
     $estConnecte = $db->login($email, $mdp);
     if ($estConnecte) {
-        header("location : menus.php");
+        header("Location: commander.php");
     } else {
         $messageerreur = "Email ou mot de passe incorrect";
     }

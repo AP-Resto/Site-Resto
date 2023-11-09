@@ -12,7 +12,6 @@ spl_autoload_register("autoloader");
 $connexionBDD = new ConnexionBDD();
 $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 $totalCommande = $connexionBDD->calculerTotalPanier($panier);
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">

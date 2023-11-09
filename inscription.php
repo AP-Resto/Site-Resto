@@ -20,7 +20,7 @@ if (isset($_POST["submit"])) {
         if ($estceQueMailEstDejaPris) {
             $messageErreur = "L'adresse email est déjà utilisée";
         } else {
-            $resultat = $connexion->register($email, $password,);
+            $resultat = $connexion->register($email, $password);
             if ($resultat == TRUE) {
                 header("Location: login.php");
             } else {
