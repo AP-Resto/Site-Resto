@@ -121,19 +121,15 @@ class ConnexionBDD
         return $verification ;
     }
 
-    public function register($email, $password)
+    public function register($email, $password): bool
     {
         $query = $this->dbh->prepare("INSERT INTO user (email,password) VALUES (:email, :password)");
-        $query->execute([
+        $inscriptionEstValidee = $query->execute([
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT)
         ]);
-        $inscriptionValidee = $query->execute();
-        if ($inscriptionValidee) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+
+       return $inscriptionEstValidee;
     }
 
     public function verification($email)
