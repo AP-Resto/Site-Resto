@@ -1,5 +1,7 @@
 <?php
-
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 class ConnexionBDD
 {
     private $host = 'localhost';
@@ -15,6 +17,7 @@ class ConnexionBDD
         $this->root = "root";
         $this->password = "";
         $this->dbh = $this->connect();
+
     }
 
     /*
@@ -101,7 +104,6 @@ class ConnexionBDD
 
     public function login($email, $password): bool
     {
-    
         $user = $this->prepareAndFetchOne(
             "SELECT * FROM user WHERE email = :email",
             [
@@ -117,7 +119,7 @@ class ConnexionBDD
             die("One of the passwords is null");
         }
         $verification = password_verify($password, $passwordHash);
-        
+        $_SESSION["user"] = $user;
         return $verification ;
     }
 
@@ -177,5 +179,35 @@ class ConnexionBDD
         }
 
         return -1;
+    }
+
+    public function insererCommandeEtProduitDepuisPanier($typeConso) {
+        $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
+        
+        $this->prepareAndFetchOne(
+            "INSERT INTO commande(id_user, id_etat, date, total_commande, type_conso) VALUES (:idUser, :idEtat, SYSDATE(), 0, :typeConso)",
+            [
+                ":idUser" => $_SESSION["user"]["id_user"],
+                ":idEtat" => 0,
+                ":typeConso" => $typeConso
+            ]
+        );
+
+        $idCommandeInseree = $this->dbh->lastInsertId();
+
+        foreach($panier as $produit){
+            $idProduit = $produit["id_produit"];
+            $quantite = $produit["qty"];
+
+            $this->prepareAndFetchOne(
+                "INSERT INTO ligne(id_commande, id_produit, qte, total_ligne_ht) VALUES (:idCommande, :idProduit, :qte, :totalHt)",
+                [
+                    ":idCommande" => $idCommandeInseree,
+                    ":idProduit" => $idProduit,
+                    ":qte" => $quantite,
+                    ":totalHt" => 0
+                ]
+            );
+        }
     }
 }

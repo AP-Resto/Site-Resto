@@ -19,12 +19,17 @@ if (isset($_POST["submit"])) {
         $messageErreur = "Le cryptogramme doit faire 3 caractères de long.";
     }
 
-    if (mb_strlen($carte) != 16) {
+    if (mb_strlen($carte) != 19) {
         $messageErreur = "Le numéro de la carte doit faire 16 caractères de long.";
     }
 
     if(mb_strlen($nom) < 3) {
         $messageErreur = "Le nom doit faire plus de 3 caractères de longueur";
+    }
+
+    if(empty($messageErreur)){
+       $connexionBDD->insererCommandeEtProduitDepuisPanier(0);
+        header("Location: confirmer.php");
     }
 }
 
@@ -68,7 +73,6 @@ if (isset($_POST["submit"])) {
     <a href="commander.php">Modifier la commande</a>
 
     <script src="assets/js/payer.js"></script>
-
 </body>
 
 </html>
