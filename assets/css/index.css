@@ -338,3 +338,25 @@ aside#cart span.price{
     font-weight: 600;
     color: black;
 }
+
+
+.item.deleting {
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 50%, rgba(0,0,0,0) 50%);
+    background-size: 200%;
+    animation: mymove .3s 1 forwards;
+    overflow: hidden;
+}
+
+@keyframes mymove {
+    0% {
+        background-position-x: 300px;
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(1);
+    }
+    100% {
+        background-position-x: 000px;
+        transform: scaleY(0);
+    }
+  }

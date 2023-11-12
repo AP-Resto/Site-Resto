@@ -85,18 +85,18 @@ if (isset($_POST["submit"])) {
         <p class="separator"></p>
 
         <label> Adresse e-mail </label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" required value="<?= $email ?>">
         
         <label> Confirmation de l'adresse email</label>
-        <input type="email" name="email-confirmation" required>
+        <input type="email" name="email-confirmation" required value="<?= $email_confirmation ?>">
         
         <p class="separator"></p>
         
         <label> Mot de passe</label>
-        <input type="password" name="password" required>
+        <input type="password" name="password" required value="<?= $password ?>">
         
         <label> Confirmation du mot de passe</label>
-        <input type="password" name="password-confirmation" required>
+        <input type="password" name="password-confirmation" required value="<?= $password_confirmation ?>">
         
         <a href="login.php" class="sublink">Vous avez déjà un compte ?</a>
         
