@@ -134,7 +134,12 @@ class ConnexionBDD
        return $inscriptionEstValidee;
     }
 
-    public function verification($email)
+    /**
+     * Cette fonction retourne true si le mail est déjà pris, false si il est pas déjà pris.
+     * Utilisée pour éviter les collisions sur les adresses mail en base.
+     * @return bool
+     */
+    public function verificationSiMailDejaPris($email): bool
     {
         if ($this->prepareAndFetchOne("SELECT email FROM user WHERE email = :email;", [":email" => $email])) {
             return TRUE;

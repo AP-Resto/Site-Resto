@@ -226,6 +226,7 @@ aside#cart .item input {
 
 aside#cart .item p.name {
     text-align: center;
+    flex: 1000;
 }
 
 aside#cart .item p.price {

@@ -75,3 +75,11 @@ img {
     margin: 0 auto;
     margin-bottom: 20px;
 }
+
+p.success-bande {
+    color: white;
+    text-align: center;
+    background: #3dd53de0;
+    padding: 1rem 0;
+    border-radius: 8px;
+}

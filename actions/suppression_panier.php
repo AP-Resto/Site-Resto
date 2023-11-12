@@ -5,6 +5,10 @@ $bdd = new ConnexionBDD();
 
 $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 
+if(!isset($_SESSION["user"])){
+    header("Location: login.php");
+    die();
+}
 if (isset($_GET["idProduit"])) {
     $idProduit = intval($_GET["idProduit"]);
 

@@ -102,6 +102,12 @@ input[type=checkbox] {
     text-align: right;
 }
 
-p.erreur {
+ul  li {
     color: red;
+}
+
+ul {
+    box-sizing: border-box;
+    padding: 0 2rem;  
+    list-style-type: circle;
 }

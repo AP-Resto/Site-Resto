@@ -1,38 +1,57 @@
 <?php
 include "assets/functions/ConnexionBDD.php";
 $connexion = new ConnexionBDD();
-$messageErreur = "";
+$messagesErreur = [];
+
+$email = $_POST["email"] ?? NULL;
+$email_confirmation = $_POST["email-confirmation"] ?? NULL;
+$password = $_POST["password"] ?? NULL;
+$password_confirmation = $_POST["password-confirmation"] ?? NULL;
+$accept_conditions = $_POST["accept_conditions"] ?? NULL;
 
 if (isset($_POST["submit"])) {
-    $email = $_POST["email"];
-    $email_confirmation = $_POST["email-confirmation"];
-    $password = $_POST["password"];
-    $password_confirmation = $_POST["password-confirmation"];
-    $accept_conditions = $_POST["accept_conditions"];
-
-    if ($password <= 8) {
-        $messageErreur = "Le mot de passe doit contenir au moins 8 caractères";
+    if (
+        $email == NULL
+        || $email_confirmation == NULL
+        || $password == NULL
+        || $password_confirmation == NULL
+        || $accept_conditions == NULL
+    ) {
+        $messagesErreur[] = "Vous devez remplir entièrement le formulaire !";
     }
 
-    if ($email == $email_confirmation && $password == $password_confirmation && $accept_conditions == "on") {
-        $estceQueMailEstDejaPris = $connexion->verification($email);
+    if ($password <= 8) {
+        $messagesErreur[] = "Le mot de passe doit contenir au moins 8 caractères";
+    }
+
+    if ($accept_conditions == NULL) {
+        $messagesErreur[] = "Vous devez accepter les conditions d'utilisations";
+    }
+
+    if ($email != $email_confirmation || $password != $password_confirmation) {
+        $messagesErreur[] = "Les mots de passe ou les emails ne correspondent pas";
+    }
+
+    if (count($messagesErreur) == 0) {
+        $estceQueMailEstDejaPris = $connexion->verificationSiMailDejaPris($email);
 
         if ($estceQueMailEstDejaPris) {
-            $messageErreur = "L'adresse email est déjà utilisée";
+            $messagesErreur[] = "L'adresse email est déjà utilisée";
         } else {
             $resultat = $connexion->register($email, $password);
             if ($resultat == TRUE) {
+                // On stocke une variable temporaire dans la session qu'on efface sur la page de login
+                // et qui sert juste à dire "Inscription réussie en haut"
+                $_SESSION["inscriptionReussie"] = TRUE;
+                
+                // Enregistrement réussi, on passe à la page de login pour lui demander de se connecter.
                 header("Location: login.php");
             } else {
-                $messageErreur = "Erreur lors de l'inscription";
+                $messagesErreur[] = "Une erreur est survenue durant l'inscription...";
             }
         }
-    } else {
-        $messageErreur = "Les mots de passe ou les emails ne correspondent pas";
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -54,28 +73,39 @@ if (isset($_POST["submit"])) {
         </p>
         <p>
             <?php
-            if ($messageErreur != "") {
-                echo "<p class=\"erreur\">$messageErreur</p>";
+            if (count($messagesErreur) > 0) {
+                echo "<ul>";
+                foreach ($messagesErreur as $messageErreur) {
+                    echo "<li>$messageErreur</li>";
+                }
+                echo "</ul>";
             }
             ?>
         </p>
         <p class="separator"></p>
+
         <label> Adresse e-mail </label>
-        <input type="email" name="email">
+        <input type="email" name="email" required>
+        
         <label> Confirmation de l'adresse email</label>
-        <input type="email" name="email-confirmation">
+        <input type="email" name="email-confirmation" required>
+        
         <p class="separator"></p>
+        
         <label> Mot de passe</label>
-        <input type="password" name="password">
+        <input type="password" name="password" required>
+        
         <label> Confirmation du mot de passe</label>
-        <input type="password" name="password-confirmation">
+        <input type="password" name="password-confirmation" required>
+        
         <a href="login.php" class="sublink">Vous avez déjà un compte ?</a>
+        
         <p class="separator"></p>
 
         <label>
-            <input type="checkbox" name="accept_conditions"> J'accepte les conditions d'utilisation
+            <input type="checkbox" name="accept_conditions" required> J'accepte les conditions d'utilisation
         </label>
-        <input type="submit" name="submit" value="Inscription">
+            <input type="submit" name="submit" value="Inscription">
     </form>
 
 </body>

@@ -2,6 +2,11 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
+
+if(!isset($_SESSION["user"])){
+    header("Location: login.php");
+    die();
+}
 $messageerreur = "";
 function my_autoloader($ConnexionBDD)
 {
@@ -31,7 +36,7 @@ function my_autoloader($ConnexionBDD)
     <p>Vous serez notifié par e-mail lorsque votre commande sera prête.</p>
     <p>Merci <i class="fa-regular fa-thumbs-up"></i></p>
 
-    <a href="index.php">Revenir à la page d'accueil</a>
+    <a href="commander.php">Revenir à la page d'accueil</a>
 
 </body>
 

@@ -3,6 +3,10 @@
 include "../assets/functions/ConnexionBDD.php";
 $bdd = new ConnexionBDD();
 
+if(!isset($_SESSION["user"])){
+    header("Location: login.php");
+    die();
+}
 $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 
 if (isset($_GET["idProduit"])) {

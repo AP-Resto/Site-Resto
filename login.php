@@ -2,7 +2,10 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
+
 $messageerreur = "";
+$inscriptionReussie = $_SESSION["inscriptionReussie"] ?? false;
+unset($_SESSION["inscriptionReussie"]);
 function my_autoloader($c)
 {
     include "assets/functions/$c.php";
@@ -34,7 +37,8 @@ if (!empty($_POST["email"]) && !empty($_POST["mdp"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/css/login.css" rel="stylesheet">
     <title>Ma Fée - Connexion à votre compte</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -44,13 +48,21 @@ if (!empty($_POST["email"]) && !empty($_POST["mdp"])) {
         <h2>Connectez vous à votre compte <span class="hint">Ma fée</span>, et venez passer votre commande</h2>
         <?php
         if ($messageerreur != "") {
-            echo "<h3 style='color: red; text-align: center'> " . $messageerreur . "</h3>";
+            echo("<h3 style='color: red; text-align: center'>$messageerreur</h3>");
+        }
+
+        if($inscriptionReussie == TRUE){
+            echo("
+            <p class=\"success-bande\">
+                Inscription réussie !
+            </p>
+            ");
         }
         ?>
-
+    
         <form action="" method="post">
-            <p>Adresse email <br><input id="email" name="email" type="text"></p>
-            <p>Mot de passe <br><input id="mdp" name="mdp" type="password"></p>
+            <p>Adresse email <br><input id="email" name="email" type="text" required></p>
+            <p>Mot de passe <br><input id="mdp" name="mdp" type="password" required></p>
             <p class="text2"><a href="">Mot de passe oublié?</a></p>
             <p class="text"><input class="connexion" type="submit" value="CONNEXION !"></p>
         </form>
