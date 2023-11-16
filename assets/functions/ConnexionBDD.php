@@ -150,7 +150,8 @@ class ConnexionBDD
     public function calculerTotalPanier($panier)
     {
         $total = 0;
-        if(count($panier) == 0){
+        // Si le panier est vide, on retourne 0 pour le total
+        if($panier == NULL || $panier == [] || count($panier) == 0){
             return $total;
         }
         $ids = [];
