@@ -32,7 +32,7 @@ class ConnexionBDD
             if ($stmt->rowCount() == 0)
                 return [];
             else
-                return $stmt->fetchAll();
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
             throw $ex;
         }
