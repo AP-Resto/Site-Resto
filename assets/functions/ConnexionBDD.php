@@ -151,14 +151,16 @@ class ConnexionBDD
     public function calculerTotalPanier($panier)
     {
         $total = 0;
-
+        if(count($panier) == 0){
+            return $total;
+        }
         $ids = [];
         foreach ($panier as $p) {
             $ids[] = $p["id_produit"];
         }
 
         $imploded = implode(",", $ids);
-
+        
         $produits = $this->prepareAndFetchAll("SELECT produit.prix_ht, produit.id_produit FROM produit WHERE produit.id_produit IN ($imploded);");
 
 

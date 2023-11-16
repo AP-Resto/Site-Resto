@@ -7,6 +7,10 @@ $connexionBDD = new ConnexionBDD();
 $messageErreur = "";
 
 $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
+if(count($panier) == 0){
+    header("Location: commander.php");
+}
+
 $totalCommande = $connexionBDD->calculerTotalPanier($panier);
 $carte = $_POST["carte_bancaire"] ?? NULL;
 $date = $_POST["date_exp"] ?? NULL;
