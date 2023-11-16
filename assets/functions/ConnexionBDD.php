@@ -195,7 +195,7 @@ class ConnexionBDD
             "INSERT INTO commande(id_user, id_etat, date, total_commande, type_conso) VALUES (:idUser, :idEtat, SYSDATE(), 0, :typeConso)",
             [
                 ":idUser" => $_SESSION["user"]["id_user"],
-                ":idEtat" => 0,
+                ":idEtat" => 1,
                 ":typeConso" => $typeConso
             ]
         );
