@@ -7,4 +7,8 @@ $commandes = $connexionBdd->prepareAndFetchAll(
 );
 
 header("Content-Type: application/json");
-echo json_encode($commandes);
+echo json_encode([
+    "success" => true,
+    "nbCommandes" => count($commandes),
+    "commandes" => $commandes
+]);
