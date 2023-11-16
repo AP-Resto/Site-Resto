@@ -1,5 +1,7 @@
 <?php
 include "../assets/functions/ConnexionBDD.php";
+include "../assets/functions/ReponseJson.php";
+
 $connexionBdd = new ConnexionBDD();
 
 $commandes = $connexionBdd->prepareAndFetchAll(
@@ -7,7 +9,7 @@ $commandes = $connexionBdd->prepareAndFetchAll(
 );
 
 header("Content-Type: application/json");
-echo json_encode([
+ReponseJson::repondre([
     "success" => true,
     "nbCommandes" => count($commandes),
     "commandes" => $commandes
