@@ -5,6 +5,7 @@ $messagesErreur = [];
 
 $email = $_POST["email"] ?? NULL;
 $email_confirmation = $_POST["email-confirmation"] ?? NULL;
+$login = $_POST["login"] ?? NULL;
 $password = $_POST["password"] ?? NULL;
 $password_confirmation = $_POST["password-confirmation"] ?? NULL;
 $accept_conditions = $_POST["accept_conditions"] ?? NULL;
@@ -38,7 +39,7 @@ if (isset($_POST["submit"])) {
         if ($estceQueMailEstDejaPris) {
             $messagesErreur[] = "L'adresse email est déjà utilisée";
         } else {
-            $resultat = $connexion->register($email, $password);
+            $resultat = $connexion->register($email,$login,$password);
             if ($resultat == TRUE) {
                 // On stocke une variable temporaire dans la session qu'on efface sur la page de login
                 // et qui sert juste à dire "Inscription réussie en haut"
@@ -90,6 +91,11 @@ if (isset($_POST["submit"])) {
         <label> Confirmation de l'adresse email</label>
         <input type="email" name="email-confirmation" required value="<?= $email_confirmation ?>">
         
+        <p class="separator"></p>
+
+        <label> login</label>
+        <input type="login" name="login" required value="<?= $login ?>">
+
         <p class="separator"></p>
         
         <label> Mot de passe</label>

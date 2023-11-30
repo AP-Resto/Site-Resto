@@ -16,15 +16,15 @@ $user = FALSE;
 
 $db = new ConnexionBDD();
 
-if (!empty($_POST["email"]) && !empty($_POST["mdp"])) {
-    $email = $_POST["email"];
+if (!empty($_POST["login"]) && !empty($_POST["mdp"])) {
+    $login = $_POST["login"];
     $mdp = $_POST["mdp"];
 
-    $estConnecte = $db->login($email, $mdp);
+    $estConnecte = $db->login($login, $mdp);
     if ($estConnecte) {
         header("Location: commander.php");
     } else {
-        $messageerreur = "Email ou mot de passe incorrect";
+        $messageerreur = "Login ou mot de passe incorrect";
     }
 }
 ?>
@@ -61,7 +61,7 @@ if (!empty($_POST["email"]) && !empty($_POST["mdp"])) {
         ?>
     
         <form action="" method="post">
-            <p>Adresse email <br><input id="email" name="email" type="text" required></p>
+            <p>login <br><input id="login" name="login" type="text" required></p>
             <p>Mot de passe <br><input id="mdp" name="mdp" type="password" required></p>
             <p class="text2"><a href="">Mot de passe oublié?</a></p>
             <p class="text"><input class="connexion" type="submit" value="CONNEXION !"></p>

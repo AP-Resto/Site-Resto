@@ -82,9 +82,9 @@ class ConnexionBDD
         $user = $_SESSION["user"];
 
         $res = $this->prepareAndFetchAll(
-            "SELECT * FROM user WHERE email = :email AND password = :password",
+            "SELECT * FROM user WHERE login = :login AND password = :password",
             [
-                ":email" => $user["email"],
+                ":login" => $user["login"],
                 ":password" => $user["password"]
             ]
         );
@@ -92,7 +92,7 @@ class ConnexionBDD
         if (count($res) == 0)
             return NULL;
 
-        $resultat = $this->login("mail", "mdp");
+        $resultat = $this->login("login", "mdp");
         if ($resultat) {
             // il est connecté.
         } else {
@@ -102,12 +102,13 @@ class ConnexionBDD
     }
 
 
-    public function login($email, $password): bool
+    public function login($login, $password): bool
     {
         $user = $this->prepareAndFetchOne(
-            "SELECT * FROM user WHERE email = :email",
+            "SELECT * FROM user WHERE login = :login",
             [
-                ':email' => $email            ]
+                ':login' => $login
+            ]
         );
 
         if($user === false || $user === []){
@@ -123,10 +124,11 @@ class ConnexionBDD
         return $verification ;
     }
 
-    public function register($email, $password): bool
+    public function register($email,$login, $password): bool
     {
-        $query = $this->dbh->prepare("INSERT INTO user (email,password) VALUES (:email, :password)");
+        $query = $this->dbh->prepare("INSERT INTO user (email,login,password) VALUES (:email, :login, :password)");
         $inscriptionEstValidee = $query->execute([
+            'login' => $login,
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT)
         ]);
