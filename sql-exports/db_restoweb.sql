@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 30 nov. 2023 à 13:50
+-- Généré le : jeu. 30 nov. 2023 à 17:07
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `db_restoweb`
 --
+CREATE DATABASE IF NOT EXISTS `db_restoweb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `db_restoweb`;
 
 -- --------------------------------------------------------
 
@@ -36,6 +38,15 @@ CREATE TABLE `commande` (
   `type_conso` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Déchargement des données de la table `commande`
+--
+
+INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES
+(6, 8, 1, '2023-11-30 16:58:27', 35.87, 1),
+(7, 8, 1, '2023-11-30 16:59:36', 37.40, 2),
+(8, 8, 1, '2023-11-30 17:02:05', 35.87, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +60,21 @@ CREATE TABLE `ligne` (
   `qte` int(11) NOT NULL DEFAULT 0,
   `total_ligne_ht` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Déchargement des données de la table `ligne`
+--
+
+INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES
+(17, 6, 3, 1, 12.50),
+(18, 6, 2, 1, 14.00),
+(19, 6, 5, 1, 7.50),
+(20, 7, 3, 1, 12.50),
+(21, 7, 2, 1, 14.00),
+(22, 7, 5, 1, 7.50),
+(23, 8, 3, 1, 12.50),
+(24, 8, 2, 1, 14.00),
+(25, 8, 5, 1, 7.50);
 
 --
 -- Déclencheurs `ligne`
@@ -130,16 +156,16 @@ CREATE TABLE `produit` (
 --
 
 INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`, `imageUrl`) VALUES
-(1, 'pizza Margherita', 12.50, ''),
-(2, 'pizza Chorizo', 14.00, ''),
-(3, 'assiette de charcuterie', 12.50, ''),
-(4, 'assiette de fromages', 10.50, ''),
-(5, 'hamburger viande', 7.50, ''),
-(6, 'hamburger vegan', 9.00, ''),
-(7, 'hot dog', 5.00, ''),
-(8, 'empanadas poulet', 11.00, ''),
-(9, 'empanadas thon', 9.00, ''),
-(10, 'portion de frites', 5.00, '');
+(1, 'pizza Margherita', 12.50, 'https://img.passeportsante.net/1200x675/2022-09-23/shutterstock-2105210927.webp'),
+(2, 'pizza Chorizo', 14.00, 'https://www.galbani.fr/wp-content/uploads/2017/07/Image7.jpg'),
+(3, 'assiette de charcuterie', 12.50, 'https://www.passionculinaire.fr/wp-content/uploads/2021/09/charcuterie-conseils.jpg'),
+(4, 'assiette de fromages', 10.50, 'https://cache.marieclaire.fr/data/photo/w999_c17/cuisine/43/fromages1.jpg'),
+(5, 'hamburger viande', 7.50, 'https://www.la-viande.fr/sites/default/files/inline-images/hamburger.jpg'),
+(6, 'hamburger vegan', 9.00, 'https://violifefoods.com/wp-content/uploads/2020/12/vegan-spicy-burger-1920x850.jpg'),
+(7, 'hot dog', 5.00, 'https://www.lidl-recettes.fr/var/site/storage/images/_aliases/960x540/3/1/6/2/2592613-1-fre-FR/Prospectus-S41_Hot-dog-bacon.jpg'),
+(8, 'empanadas poulet', 11.00, 'https://www.enviedebienmanger.fr/sites/default/files/styles/img_orig/public/2020-12/68_1.png?itok=lfzsdW9K'),
+(9, 'empanadas thon', 9.00, 'https://www.seb.fr/medias/?context=bWFzdGVyfHJvb3R8NDQ4ODh8aW1hZ2UvanBlZ3xoM2YvaDI0LzE2NDgwMTYzMzk3NjYyLmpwZ3wzYTRjYWI3OTFkYjE5ZGFhODQ4MGZkMThiNDI3Njc3MTQ3MWE3OTkwYTc3MTYwYjc1YTI4ZGU5NjgyZTAzZGU4'),
+(10, 'portion de frites', 5.00, 'https://brigade-hocare.com/info/wp-content/uploads/2022/10/portion-de-frites.jpg');
 
 -- --------------------------------------------------------
 
@@ -160,7 +186,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `login`, `password`, `email`) VALUES
 (1, 'jef', '$2y$10$OPEElGC0F4PghGraYRFl7OmH57cnVWvApKYF/oWDRmEkj8PVhiwBu', 'jef@m2l.fr'),
-(8, '', '$2y$10$wgYsVsexeJHE0Bitxz2OXuzvyGZEhEZdYoR/cxS02SnRkkCmLrxxa', 'test@test.fr'),
+(8, 'test', '$2y$10$wgYsVsexeJHE0Bitxz2OXuzvyGZEhEZdYoR/cxS02SnRkkCmLrxxa', 'test@test.fr'),
 (10, '', '$2y$10$ZjmEtsUSjb4S4Z.OYC1XhOwDRoGd81LgxG0D/m4nNft5rh.HcAHTS', 'test2@test.fr');
 
 --
@@ -203,13 +229,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `ligne`
 --
 ALTER TABLE `ligne`
-  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `produit`

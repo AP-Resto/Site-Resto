@@ -3,7 +3,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-if(!isset($_SESSION["user"])){
+if (!isset($_SESSION["user"])) {
     header("Location: login.php");
     die();
 }
@@ -100,13 +100,13 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
 
                 return [];
             }
-            ?>
+                ?>
 
         </div>
         <div class="bottom">
-            <button onclick="window.location.href = 'payer.php';">Payer !
+            <button onclick="showPopup();">Payer !
                 <span class="price">
-                    <?= "(" . number_format($montantTotalPanier, 2) . "€)" ?>
+                    <?= "(" . number_format($montantTotalPanier, 2) . "€ H.T)" ?>
                 </span>
             </button>
         </div>
@@ -123,9 +123,10 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
             $id = $plat["id_produit"];
             $libelle = $plat["libelle"];
             $prix = $plat["prix_ht"];
+            $imageUrl = $plat["imageUrl"];
             echo "
                 <div class=\"item\" data-item-id=\"$id\">
-                <img src=\"https://generatorfun.com/code/uploads/Random-Food-image-$i.jpg\" class=\"preview\">
+                <img src=\"$imageUrl\" class=\"preview\">
                 <div class=\"content\">
                         <p class=\"name\">$libelle</p>
                         <p class=\"description\"></p>
@@ -145,6 +146,20 @@ $panier = json_decode($_COOKIE["panier"] ?? "[]", true);
         ?>
     </div>
 
+    <div id="popup-type-conso" style="display: none;">
+        <div class="wrapper">
+            <p class="title">Choisissez un moyen de livraison</p>
+
+            <div class="mode" data-type-conso="1">
+                <img src="https://img.icons8.com/?size=256&id=543&format=png">
+                Sur place
+            </div>
+            <div class="mode" data-type-conso="2">
+                <i class="fas fa-shipping-fast"></i>
+                A emporter
+            </div>
+        </div>
+    </div>
     <script src="assets/js/profileModule.js"></script>
     <script src="assets/js/panier.js"></script>
 </body>

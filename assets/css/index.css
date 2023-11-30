@@ -102,7 +102,7 @@ img.logo {
     height: 40px;
 }
 
-#profile .head:hover{
+#profile .head:hover {
     cursor: pointer;
 }
 
@@ -180,7 +180,7 @@ aside#cart .bottom button {
     font-size: 1.15rem;
 
     transition: .2s filter, .2s transform;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -337,7 +337,7 @@ aside#cart .item .delete:hover {
     filter: brightness(1.1);
 }
 
-aside#cart span.price{
+aside#cart span.price {
     font-size: .9rem;
     font-weight: 600;
     color: black;
@@ -345,7 +345,7 @@ aside#cart span.price{
 
 
 .item.deleting {
-    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 50%, rgba(0,0,0,0) 50%);
+    background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 50%);
     background-size: 200%;
     animation: mymove .3s 1 forwards;
     overflow: hidden;
@@ -356,11 +356,77 @@ aside#cart span.price{
         background-position-x: 300px;
         transform: scaleY(1);
     }
+
     50% {
         transform: scaleY(1);
     }
+
     100% {
         background-position-x: 000px;
         transform: scaleY(0);
     }
-  }
+}
+
+#popup-type-conso {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000A0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#popup-type-conso .wrapper {
+    background: white;
+    width: 320px;
+    height: 150px;
+    border-radius: 4px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 16px;
+    text-align: center;
+}
+
+#popup-type-conso .wrapper p.title{
+    font-weight: 800;
+}
+
+#popup-type-conso .wrapper div.mode{
+    width: 80%;
+    height: 40px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid whitesmoke;
+
+    margin-top: .5rem;
+    box-sizing: border-box;
+    padding-right: 25%;
+    padding-left: 5%;
+    text-align: left;
+}
+
+#popup-type-conso .wrapper div.mode img{
+    width: 22px;
+    transform: translateY(-.15rem);
+}
+
+#popup-type-conso .wrapper div.mode.selected{
+    border-color: rgb(255, 217, 147);
+}
+
+
+#popup-type-conso .wrapper div.mode:not(.selected):hover{
+    border-color: rgb(255, 225, 169);
+    cursor: pointer;
+}
