@@ -17,7 +17,6 @@ class ConnexionBDD
         $this->root = "root";
         $this->password = "";
         $this->dbh = $this->connect();
-
     }
 
     /*
@@ -64,7 +63,7 @@ class ConnexionBDD
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $db;
         } catch (PDOException $e) {
-            echo "Erreur de connexion : " . $e->getMessage();
+            die();
         }
     }
 
@@ -153,7 +152,8 @@ class ConnexionBDD
     public function calculerTotalPanier($panier)
     {
         $total = 0;
-        if(count($panier) == 0){
+        // Si le panier est vide, on retourne 0 pour le total
+        if($panier == NULL || $panier == [] || count($panier) == 0){
             return $total;
         }
         $ids = [];
