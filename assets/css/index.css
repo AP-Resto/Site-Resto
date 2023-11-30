@@ -102,6 +102,10 @@ img.logo {
     height: 40px;
 }
 
+#profile .head:hover{
+    cursor: pointer;
+}
+
 #profile .head .left {
     flex: 0.85;
 }

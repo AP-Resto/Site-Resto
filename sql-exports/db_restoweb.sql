@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 16 nov. 2023 à 16:46
+-- Généré le : jeu. 30 nov. 2023 à 13:50
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `db_restoweb`
 --
-CREATE DATABASE IF NOT EXISTS `db_restoweb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `db_restoweb`;
 
 -- --------------------------------------------------------
 
@@ -38,13 +36,6 @@ CREATE TABLE `commande` (
   `type_conso` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Déchargement des données de la table `commande`
---
-
-INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES
-(5, 8, 1, '2023-11-16 16:40:47', 0.00, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -58,16 +49,6 @@ CREATE TABLE `ligne` (
   `qte` int(11) NOT NULL DEFAULT 0,
   `total_ligne_ht` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Déchargement des données de la table `ligne`
---
-
-INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES
-(13, 5, 2, 1, 14.00),
-(14, 5, 5, 1, 7.50),
-(15, 5, 6, 1, 9.00),
-(16, 5, 3, 42, 525.00);
 
 --
 -- Déclencheurs `ligne`
@@ -140,24 +121,25 @@ DELIMITER ;
 CREATE TABLE `produit` (
   `id_produit` int(11) NOT NULL,
   `libelle` varchar(255) NOT NULL,
-  `prix_ht` decimal(10,2) NOT NULL
+  `prix_ht` decimal(10,2) NOT NULL,
+  `imageUrl` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `produit`
 --
 
-INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`) VALUES
-(1, 'pizza Margherita', 12.50),
-(2, 'pizza Chorizo', 14.00),
-(3, 'assiette de charcuterie', 12.50),
-(4, 'assiette de fromages', 10.50),
-(5, 'hamburger viande', 7.50),
-(6, 'hamburger vegan', 9.00),
-(7, 'hot dog', 5.00),
-(8, 'empanadas poulet', 11.00),
-(9, 'empanadas thon', 9.00),
-(10, 'portion de frites', 5.00);
+INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`, `imageUrl`) VALUES
+(1, 'pizza Margherita', 12.50, ''),
+(2, 'pizza Chorizo', 14.00, ''),
+(3, 'assiette de charcuterie', 12.50, ''),
+(4, 'assiette de fromages', 10.50, ''),
+(5, 'hamburger viande', 7.50, ''),
+(6, 'hamburger vegan', 9.00, ''),
+(7, 'hot dog', 5.00, ''),
+(8, 'empanadas poulet', 11.00, ''),
+(9, 'empanadas thon', 9.00, ''),
+(10, 'portion de frites', 5.00, '');
 
 -- --------------------------------------------------------
 
