@@ -218,5 +218,7 @@ class ConnexionBDD
                 ]
             );
         }
+
+        $_SESSION["idDeCommandeDernierementInseree"] = $idCommandeInseree;
     }
 }
