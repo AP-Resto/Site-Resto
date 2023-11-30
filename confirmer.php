@@ -27,6 +27,7 @@ $totalCommande = $connexion->prepareAndFetchOne(
 );
 $totalCommande = $totalCommande["total_commande"];
 unset($_SESSION["idDeCommandeDernierementInseree"]);
+setcookie("panier", "[]", time() + 72000, "/");
 
 function my_autoloader($ConnexionBDD)
 {

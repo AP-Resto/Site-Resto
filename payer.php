@@ -17,6 +17,8 @@ $date = $_POST["date_exp"] ?? NULL;
 $cryptogramme = $_POST["cryptogramme"] ?? NULL;
 $nom = $_POST["nom_titulaire"] ?? NULL;
 
+$typeConso = $_GET["typeConso"] ?? 1;
+
 if (isset($_POST["submit"])) {
     if ($cryptogramme == NULL || mb_strlen($cryptogramme) != 3) {
         $messageErreur = "Le cryptogramme doit faire 3 caractères de long.";
@@ -31,7 +33,7 @@ if (isset($_POST["submit"])) {
     }
 
     if (empty($messageErreur)) {
-        $connexionBDD->insererCommandeEtProduitDepuisPanier(0);
+        $connexionBDD->insererCommandeEtProduitDepuisPanier($typeConso);
         header("Location: confirmer.php");
     }
 }

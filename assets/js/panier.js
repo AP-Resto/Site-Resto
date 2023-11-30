@@ -30,3 +30,19 @@ function supprimerDuPanier(element){
 
     return;
 }
+
+
+document.querySelectorAll("#popup-type-conso .mode").forEach(mode => {
+    mode.addEventListener("click", () => {
+        document.querySelectorAll("#popup-type-conso .mode").forEach(temp => {
+            temp.classList.remove("selected");
+        });
+       
+        mode.classList.add("selected");
+        window.location.href = `payer.php?typeConso=${mode.getAttribute("data-type-conso")}`;
+    });
+});
+
+function showPopup(){
+    document.getElementById("popup-type-conso").style.display = "flex";
+}
