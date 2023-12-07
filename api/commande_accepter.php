@@ -29,7 +29,6 @@ if (!($connexionBdd->prepareAndFetchOne("SELECT * FROM commande WHERE id_command
 $commandes = $connexionBdd->prepareAndFetchOne(
     "UPDATE commande SET id_etat = :idEtat WHERE id_commande = :idCommande;",
     [
-        ":idEtat" => 1,
         ":idCommande" => $ID_commande
     ]
 );
