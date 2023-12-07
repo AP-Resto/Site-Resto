@@ -1,5 +1,6 @@
 <?php
 include "../assets/functions/ConnexionBDD.php";
+include("../assets/functions/ReponseJson.php");
 $connexionBdd = new ConnexionBDD();
 
 if (!isset($_GET["id_commande"])) {
