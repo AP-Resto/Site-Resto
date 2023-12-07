@@ -23,7 +23,7 @@ if ($connexionBdd->prepareAndFetchOne("SELECT * FROM commande WHERE id_commande 
     ]);
 }
 
-// On update l'état de l'id commande on le met à 1 ce qui représente l'état "en préparation"
+// On update l'état de l'id commande ce qui représente l'état quand la commande est réfusé
 $connexionBdd->prepareAndFetchOne(
     "UPDATE commande SET id_etat = 3 where id_commande = :id_commande",
     [
