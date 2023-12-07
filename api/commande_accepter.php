@@ -35,8 +35,6 @@ $commandes = $connexionBdd->prepareAndFetchOne(
 
 //Après la mise à jour réussie, le script renvoie une réponse JSON indiquant le succès de l'opération.
 ReponseJson::repondre([
-    [
         "success" => true,
         "message" => "La commande $ID_commande est maintenant acceptee !"
-    ]
 ]);
