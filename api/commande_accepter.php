@@ -25,19 +25,16 @@ if (!($connexionBdd->prepareAndFetchOne("SELECT * FROM commande WHERE id_command
 }
 
 
-// On update l'état de l'id commande on le met à 1 ce qui représente l'état "en préparation"
+// On update l'état de l'id commande ce qui représente l'état "en préparation"
 $commandes = $connexionBdd->prepareAndFetchOne(
-    "UPDATE commande SET id_etat = :idEtat WHERE id_commande = :idCommande;",
+    "UPDATE commande SET id_etat = 1 WHERE id_commande = :idCommande;",
     [
-        ":idEtat" => 1,
         ":idCommande" => $ID_commande
     ]
 );
 
 //Après la mise à jour réussie, le script renvoie une réponse JSON indiquant le succès de l'opération.
 ReponseJson::repondre([
-    [
         "success" => true,
         "message" => "La commande $ID_commande est maintenant acceptee !"
-    ]
 ]);
