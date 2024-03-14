@@ -1,17 +1,17 @@
 <?php
 include "../assets/functions/ConnexionBDD.php";
 include "../assets/functions/ReponseJson.php";
-
 $connexionBdd = new ConnexionBDD();
-
 
 // Sélectionner les commandes avec leurs lignes associées
 $commandes = $connexionBdd->prepareAndFetchAll(
-    "SELECT commande.*, ligne.*
+    "SELECT commande.*, ligne.*, produit.*
      FROM commande
      INNER JOIN ligne ON commande.id_commande = ligne.id_commande
+     INNER JOIN produit ON ligne.id_produit = produit.id_produit
      WHERE commande.id_etat = 1;"
 );
+
 
 // Organiser les commandes par leur ID pour regrouper les lignes
 $commandesGrouped = [];
@@ -26,13 +26,14 @@ foreach ($commandes as $commande) {
             'date' => $commande['date'],
             'total_commande' => $commande['total_commande'],
             'type_conso' => $commande['type_conso'],
-            'lignes' => [] // Initialiser un tableau pour les lignes de commande
+            'lignes' => [] // Initialiser un tableau pour les lignes de commande,
         ];
     }
     // Ajouter la ligne à la commande correspondante dans le tableau regroupé
     $commandesGrouped[$commandeId]['lignes'][] = [
         'id_ligne' => $commande['id_ligne'],
         'id_produit' => $commande['id_produit'],
+        'libelle_produit' => $commande["libelle"],
         'qte' => $commande['qte'],
         'total_ligne_ht' => $commande['total_ligne_ht']
     ];
