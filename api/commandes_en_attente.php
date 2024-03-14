@@ -5,13 +5,13 @@ $connexionBdd = new ConnexionBDD();
 
 // Sélectionner les commandes avec leurs lignes associées
 $commandes = $connexionBdd->prepareAndFetchAll(
-    "SELECT commande.*, ligne.*, produit.*
+    "SELECT commande.*, ligne.*, produit.*, user.*
      FROM commande
      INNER JOIN ligne ON commande.id_commande = ligne.id_commande
      INNER JOIN produit ON ligne.id_produit = produit.id_produit
+     INNER JOIN user ON commande.id_user = user.id_user
      WHERE commande.id_etat = 1;"
 );
-
 
 // Organiser les commandes par leur ID pour regrouper les lignes
 $commandesGrouped = [];
@@ -26,7 +26,11 @@ foreach ($commandes as $commande) {
             'date' => $commande['date'],
             'total_commande' => $commande['total_commande'],
             'type_conso' => $commande['type_conso'],
-            'lignes' => [] // Initialiser un tableau pour les lignes de commande,
+            'lignes' => [], // Initialiser un tableau pour les lignes de commande,
+            'user' => [
+                'login' => $commande["login"],
+                'email' => $commande["email"]
+            ]
         ];
     }
     // Ajouter la ligne à la commande correspondante dans le tableau regroupé
