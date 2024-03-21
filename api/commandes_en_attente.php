@@ -10,7 +10,7 @@ $commandes = $connexionBdd->prepareAndFetchAll(
      INNER JOIN ligne ON commande.id_commande = ligne.id_commande
      INNER JOIN produit ON ligne.id_produit = produit.id_produit
      INNER JOIN user ON commande.id_user = user.id_user
-     WHERE commande.id_etat = 1;"
+     WHERE commande.id_etat = 0;"
 );
 
 // Organiser les commandes par leur ID pour regrouper les lignes
