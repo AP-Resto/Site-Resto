@@ -16,7 +16,7 @@ if (!isset($_GET["id_commande"])) {
 
 $commande = $_GET["id_commande"];
 // On vérifie si l'ID de commande existe dans la base 
-if ($connexionBdd->prepareAndFetchOne("SELECT * FROM commande WHERE id_commande = :id_commande", [":id_commande" => $commande])) {
+if (!$connexionBdd->prepareAndFetchOne("SELECT * FROM commande WHERE id_commande = :id_commande", [":id_commande" => $commande])) {
     ReponseJson::repondre([
         "succes" => false,
         "erreur" => "La commande $commande est inexistante"
