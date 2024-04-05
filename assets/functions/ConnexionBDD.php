@@ -1,4 +1,5 @@
 <?php
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -7,7 +8,7 @@ class ConnexionBDD
     private $host = 'localhost';
     private $dbname = 'db_restoweb';
     private $root = 'root';
-    private $password = '';
+    private $password = 'ryanbest';
     private $dbh;
 
     public function __construct()
@@ -63,7 +64,11 @@ class ConnexionBDD
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $db;
         } catch (PDOException $e) {
-            die();
+            die(
+            "<b>Une erreur est survenue lors de la connexion à MYSQL !</b><br><br><u>" .
+            $e->getMessage() .
+            "</u>"
+            );
         }
     }
 
@@ -120,7 +125,7 @@ class ConnexionBDD
         }
         $verification = password_verify($password, $passwordHash);
         $_SESSION["user"] = $user;
-        return $verification ;
+        return $verification;
     }
 
     public function register($email,$login, $password): bool
